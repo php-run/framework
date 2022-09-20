@@ -1,0 +1,33 @@
+{
+    "name": "php-run/framework",
+    "description": "Run is a nano-API framework for building awesome small productive and scalable web apps.",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Run\\": "src/"
+        },
+        "files": [
+            "src/Steps/Helper/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "baselrabia",
+            "email": "baselrabia@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "symfony/console": "^5.4",
+        "symfony/var-dumper": "^5.4",
+        "illuminate/events": "^9.30",
+        "illuminate/routing": "^9.30",
+        "illuminate/config": "^9.30",
+        "illuminate/container": "^9.30",
+        "laravel-zero/foundation": "^9.26",
+        "filp/whoops": "^2.14",
+        "vlucas/phpdotenv": "^5.4",
+        "illuminate/filesystem": "^9.30",
+        "illuminate/log": "^9.30"
+    }
+}
