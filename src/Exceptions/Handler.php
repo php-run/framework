@@ -2,8 +2,12 @@
 
 namespace Run\Exceptions;
 
+use Illuminate\Console\View\Components\BulletList;
+use Illuminate\Console\View\Components\Error;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Throwable;
+use Symfony\Component\Console\Exception\CommandNotFoundException;
+use Symfony\Component\Console\Application as ConsoleApplication;
 
 class Handler implements ExceptionHandler
 {
@@ -50,14 +54,32 @@ class Handler implements ExceptionHandler
     /**
      * Render an exception to the console.
      *
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Throwable $e
+     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
+     * @param  \Throwable  $e
      * @return void
      *
      * @internal This method is not meant to be used or overwritten outside the framework.
      */
     public function renderForConsole($output, Throwable $e)
     {
-        // TODO: Implement renderForConsole() method.
+        if ($e instanceof CommandNotFoundException) {
+            $message = str($e->getMessage())->explode('.')->first();
+
+            if (! empty($alternatives = $e->getAlternatives())) {
+                $message .= '. Did you mean one of these?';
+
+                with(new Error($output))->render($message);
+                with(new BulletList($output))->render($e->getAlternatives());
+
+                $output->writeln('');
+            } else {
+                with(new Error($output))->render($message);
+            }
+
+            return;
+        }
+
+        (new ConsoleApplication)->renderThrowable($e, $output);
     }
+
 }

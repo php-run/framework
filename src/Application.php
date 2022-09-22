@@ -13,6 +13,8 @@ use Illuminate\Routing\RoutingServiceProvider;
 class Application extends BaseApplication
 {
 
+    const VERSION = '1.0.2';
+
 
     /**
      * Create a new Run application instance.
@@ -47,7 +49,6 @@ class Application extends BaseApplication
         $this->instance(self::class, $this);
         $this->instance(Container::class, $this);
 
-        $this->instance('files', new \Illuminate\Filesystem\Filesystem);
 
         $this->singleton(PackageManifest::class, function () {
             return new PackageManifest(
